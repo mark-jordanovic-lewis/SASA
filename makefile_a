@@ -1,0 +1,40 @@
+# makefile for SASAC_text
+
+# compiler choice
+CC = gcc
+CPP = g++
+
+# executable path
+BIN = .
+
+# library paths
+LIBS =  -L/usr/local/include/eigen2/ -leigen2 # Eigen/ -L/usr/local/include/eigen2/Eigen/Core -L/usr/local/include/eigen2/Eigen/LU -lEigen
+
+# include paths
+INCLUDE = -I/usr/local/include/eigen2/
+
+
+# compilation flags
+CFLAGS = # -O6
+
+# linking flags
+LFLAGS = -lm
+
+# object declarations
+GeomTest_OBJS = geomTest.o
+
+geomTest_source = SASAGeometry.cpp SASAGeometry.h sasa_transformMatrix.cpp sasa_transformMatrix.h
+geomTest_cpp_headers	= -o core.h.gch /usr/local/include/eigen2/Eigen/src/Core/*.h
+geomTest_c_headers 	= 
+
+geomTest.o 	:	SASAGeometry.cpp SASAGeometry.h geomSetup.cpp sasa_transformMatrix.cpp sasa_transformMatrix.h	
+
+
+# compile choices
+geomTest	: $(GeomTest_OBJS) makefile
+			g++ $(geomTest_cpp_headers)
+			$(CC) $(LIBS) $(INCLUDE) $(CFLAGS) -c $(geomTest_source) $(LFLAGS)
+			$(GCC) $(LIBS) $(INCLUDE) $(CFLAGS) -c geomSetup.cpp $(LFLAGS)
+			$(CC) $(LIBS) $(INCLUDE) -o $(BIN)/geomTest $(GeomTest_OBJS) $(LFLAGS)
+
+clean		: \rm *.o *~ p1

@@ -1,0 +1,34 @@
+# makefile for SASAC_text
+
+# compiler choice
+CXX = g++
+
+# executable path
+BIN = .
+
+# library paths
+LIBS = -L.
+
+# include paths
+INCLUDE = -I. 
+
+# compilation flags
+CXXFLAGS = -pipe # -O6
+
+# linking flags
+LDFLAGS = -lm
+
+# object declarations
+GeomTest_OBJS 		= 	sasa_transformMatrix.o SASAGeometry.o geomSetup.o
+
+SASAGeometry.o		:	SASAGeometry.cpp SASAGeometry.h 
+
+sasa_transformMatrix.o	: 	sasa_transformMatrix.cpp sasa_transformMatrix.h	
+
+geomSetup.o 		:	geomSetup.cpp
+
+# compile choices
+geomSetup		: $(GeomTest_OBJS)
+				$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $+
+
+clean			: \rm *.o *~ p1
